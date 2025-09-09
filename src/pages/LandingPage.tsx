@@ -44,6 +44,7 @@ const LandingPage = () => {
 
   if (isTokenValid) {
     navigate('/dashboard');
+    return <Mainpage />;
   }
 
   return (
@@ -63,7 +64,7 @@ const LandingPage = () => {
             Start Reading
           </button>
         </div>
-        <div className='hidden lg:block h-[85vh] w-full absolute z-10 right-0'>
+        <div className='hidden lg:flex h-[85vh] w-1/2 absolute top-0 right-0'>
           <img className='h-full w-full object-cover object-center' src={image} alt="Landing" />
         </div>
       </div>

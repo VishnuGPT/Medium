@@ -102,7 +102,7 @@ const Mainpage = () => {
                             <button className='text-lg hover:text-gray-700 hover:cursor-pointer text-gray-400'>Profile</button>
                             <button className='text-lg hover:text-gray-700 hover:cursor-pointer text-gray-400'>My Stories</button>
                         </div>
-                        <button className='text-lg hover:bg-red-400 p-2 rounded-2xl hover:cursor-pointer hover:font-semibold hover:text-white text-gray-400'>Logout</button>
+                        <button onClick={() => { localStorage.removeItem('token'); navigate('/'); }} className='text-lg hover:bg-red-400 p-2 rounded-2xl hover:cursor-pointer hover:font-semibold hover:text-white text-gray-400'>Logout</button>
                     </div>
                 </motion.div>
             )}
