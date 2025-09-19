@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/components/navbar';
+import { useEffect, useState } from 'react';
+import Navbar from '../assets/components/Navbar';
 import image from '../assets/4_SdjkdS98aKH76I8eD0_qjw.webp';
 import Bottom from '../assets/components/Bottom';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,7 @@ const LandingPage = () => {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/verify`, { token });
         if (response.data.message === 'Token is valid') {
           setuserName(response.data.userName);
+          console.log(userName);
           setIsTokenValid(true);
         } else {
           console.log('Token is invalid');
@@ -44,6 +45,7 @@ const LandingPage = () => {
 
   if (isTokenValid) {
     navigate('/dashboard');
+    return <Mainpage />;
   }
 
   return (
@@ -63,7 +65,7 @@ const LandingPage = () => {
             Start Reading
           </button>
         </div>
-        <div className='hidden lg:block h-[85vh] w-full absolute z-10 right-0'>
+        <div className='hidden lg:flex h-[85vh] w-1/2 absolute top-0 right-0'>
           <img className='h-full w-full object-cover object-center' src={image} alt="Landing" />
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {LoadingOverlay} from '../assets/components/LoadingOverlay'
+import { LoadingOverlay } from '../assets/components/LoadingOverlay';
+
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -26,9 +27,8 @@ const SignUp = () => {
   const handleSubmit = (e: React.FormEvent) => {
     setLoading(true);
     e.preventDefault();
-    //regex for email validation(gmail.com only)
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    if (!emailRegex.test(formData.email) ) {
+    if (!emailRegex.test(formData.email)) {
       setFormDataError(prev => ({ ...prev, email: true }));
       setError(true);
       setErrorName('Invalid email format');
@@ -42,31 +42,31 @@ const SignUp = () => {
       setLoading(false);
       return;
     }
-      axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/signup`, {
-        name: formData.fullName,
-        email: formData.email,
-        password: formData.password,
+    axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/signup`, {
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    })
+      .then(response => {
+        setLoading(false);
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        Navigate('/');
       })
-        .then(response => {
-          setLoading(false);
-          const token = response.data.token;
-          localStorage.setItem('token', token);
-          Navigate('/');
-        })
-        .catch(error => {
-          setLoading(false);
-          setError(true);
-          setErrorName(error.response.data.message);
-        });
+      .catch(error => {
+        setLoading(false);
+        setError(true);
+        setErrorName(error.response?.data?.message || 'Something went wrong');
+      });
+  };
 
-    
-  }
-  if(loading) {
+  if (loading) {
     return <LoadingOverlay />;
   }
+
   return (
-    <div className='flex flex-col items-center justify-center h-screen bg-gray-100 py-50'>
-      <form onSubmit={handleSubmit} className="grid gap-6 mb-6 md:grid-cols-1 bg-[rgb(247,244,237)] rounded-lg shadow-lg lg:w-1/3 p-5 m-3">
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 py-50">
+      <form onSubmit={handleSubmit} className="grid gap-6 mb-6 md:grid-cols-1 bg-white rounded-lg shadow-lg lg:w-1/3 p-5 m-3">
 
         <div>
           <h2 className="text-2xl font-semibold text-black mb-4 text-center">Sign Up</h2>
@@ -77,7 +77,7 @@ const SignUp = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
             placeholder="John"
             required
           />
@@ -91,8 +91,8 @@ const SignUp = () => {
             value={formData.email}
             onChange={handleChange}
             className={formDataError.email
-              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5  focus:ring-red-500 hover:border-red-500 focus:ring-2 "
-              : "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5 focus:ring-red-500 hover:border-red-500 focus:ring-2"
+              : "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
             }
             placeholder="john.doe@gmail.com"
             required
@@ -107,9 +107,10 @@ const SignUp = () => {
             value={formData.password}
             onChange={handleChange}
             className={formDataError.password
-              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5  focus:ring-red-500 hover:border-red-500 focus:ring-2 "
-              : "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            } placeholder="•••••••••"
+              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5 focus:ring-red-500 hover:border-red-500 focus:ring-2"
+              : "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            }
+            placeholder="•••••••••"
             required
           />
         </div>
@@ -122,27 +123,30 @@ const SignUp = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className={formDataError.password
-              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5  focus:ring-red-500 hover:border-red-500 focus:ring-2 "
-              : "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            } placeholder="•••••••••"
+              ? "bg-red-50 border-2 border-red-500 text-sm rounded-lg block w-full p-2.5 focus:ring-red-500 hover:border-red-500 focus:ring-2"
+              : "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            }
+            placeholder="•••••••••"
             required
           />
         </div>
 
         <div className="flex items-start mb-6">
-          <input id="remember"  type="checkbox" className="w-4 h-4 mr-2 cursor-pointer" required />
+          <input id="remember" type="checkbox" className="w-4 h-4 mr-2 cursor-pointer" required />
           <label className="text-sm font-medium text-black">
-            I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.
+            I agree with the <a href="#" className="text-blue-600 hover:underline">terms and conditions</a>.
           </label>
         </div>
 
-        <button type="submit"  className="bg-blue-700 p-2 rounded-2xl text-center cursor-pointer text-white hover:bg-blue-800 w-full">
+        <button type="submit" className="bg-blue-700 p-2 rounded-2xl text-center cursor-pointer text-white hover:bg-blue-800 w-full">
           Sign Up
         </button>
+
         <p className="text-sm font-light text-center text-black">
-          Already have an account? <a href="/signin" className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500">Sign In</a>
+          Already have an account? <a href="/signin" className="font-medium text-blue-600 hover:underline">Sign In</a>
         </p>
-        {error && <p className="text-sm font-light text-center text-red-500 dark:text-red-400 animate-pulse">{errorName === 'Invalid input' ? 'Password Should be atleast 6 characters long' : errorName}</p>}
+
+        {error && <p className="text-sm font-light text-center text-red-500 animate-pulse">{errorName === 'Invalid input' ? 'Password should be at least 6 characters long' : errorName}</p>}
       </form>
     </div>
   );
