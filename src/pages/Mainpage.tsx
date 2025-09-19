@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import  { useEffect, useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import PostCard from '../assets/components/PostCard'
 import axios from 'axios'
 import { motion } from 'framer-motion';
@@ -7,18 +7,29 @@ import { LoadingOverlay } from '../assets/components/LoadingOverlay'
 
 const Mainpage = () => {
     const navigate = useNavigate();
+    interface Blog {
+        id: string;
+        title: string;
+        content: string;
+        author: { name: string };
+        image: string;
+        createdAt: string;
+        // add other fields if needed
+    }
+
     const [userName, setUserName] = useState('User');
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
-    const [visibleBlogs, setVisibleBlogs] = useState([]);
+    const [visibleBlogs, setVisibleBlogs] = useState<Blog[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [showSetting, setShowSetting] = useState(false);
     const [input, setInput] = useState('');
-    const [filteredBlogs, setFilteredBlogs] = useState([]);
+    const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
     const postsPerPage = 10; // show 10 posts per page
 
     useEffect(() => {
         if (input === '') {
+            console.log(filteredBlogs)
             // if search is empty, show all blogs (first page)
             setFilteredBlogs(blogs);
             setVisibleBlogs(blogs.slice(0, postsPerPage));
@@ -44,13 +55,27 @@ const Mainpage = () => {
             setLoading(false);
 
             // assign unique images
-            const blogsWithImages = fetchedBlogs.map((blog, i) => ({
+            interface Author {
+                name: string;
+            }
+
+            interface Blog {
+                id: string;
+                title: string;
+                content: string;
+                author: Author;
+                image: string;
+                createdAt: string;
+                // add other fields if needed
+            }
+
+            const blogsWithImages: Blog[] = fetchedBlogs.map((blog: Blog, i: number): Blog => ({
                 ...blog,
                 image: `https://picsum.photos/200?random=${Date.now() + i}`
             }));
 
             // sort most recent first
-            blogsWithImages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            blogsWithImages.sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
             setBlogs(blogsWithImages);
             setVisibleBlogs(blogsWithImages.slice(0, postsPerPage));
@@ -76,7 +101,11 @@ const Mainpage = () => {
 
 
     // handle page change
-    const handlePageChange = (pageNumber) => {
+    interface HandlePageChangeProps {
+        (pageNumber: number): void;
+    }
+
+    const handlePageChange: HandlePageChangeProps = (pageNumber) => {
         const startIndex = (pageNumber - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         setVisibleBlogs(blogs.slice(startIndex, endIndex));

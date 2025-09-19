@@ -1,5 +1,4 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -7,8 +6,9 @@ import {LoadingOverlay} from '../assets/components/LoadingOverlay'
 
 
 const NewStory = () => {
+    
     const navigate = useNavigate()
-    const [userName, setuserName] = React.useState(null)
+    const [userName, setuserName] = React.useState<string | null>(null)
     const [isTokenValid, setIsTokenValid] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
 
@@ -90,7 +90,11 @@ const NewStory = () => {
                         </div>
                         <div className='p-2 flex gap-4 items-center'>
                             <button onClick={handleClick} className='bg-green-400 rounded-2xl text-sm px-2 h-8 hover:cursor-pointer hover:bg-green-600' disabled={loading} >Publish</button>
-                            <button className=' hover:cursor-pointer hover:bg-gray-600  border-black border-1 p-2 rounded-4xl text-xl font-semibold text-white bg-gray-400'>{userName.charAt(0)}{userName.split(' ')[1].charAt(0)}</button>
+                            <button className=' hover:cursor-pointer hover:bg-gray-600  border-black border-1 p-2 rounded-4xl text-xl font-semibold text-white bg-gray-400'>
+                                {userName && typeof userName === 'string'
+                                    ? `${userName.charAt(0)}${userName.split(' ')[1] ? userName.split(' ')[1].charAt(0) : ''}`
+                                    : ''}
+                            </button>
                         </div>
                     </nav>
 

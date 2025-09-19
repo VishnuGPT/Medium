@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/components/navbar';
+import { useEffect, useState } from 'react';
+import Navbar from '../assets/components/Navbar';
 import image from '../assets/4_SdjkdS98aKH76I8eD0_qjw.webp';
 import Bottom from '../assets/components/Bottom';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,7 @@ const LandingPage = () => {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/verify`, { token });
         if (response.data.message === 'Token is valid') {
           setuserName(response.data.userName);
+          console.log(userName);
           setIsTokenValid(true);
         } else {
           console.log('Token is invalid');
