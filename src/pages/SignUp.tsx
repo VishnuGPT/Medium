@@ -66,7 +66,7 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 py-50">
-      <form onSubmit={handleSubmit} className="grid gap-6 mb-6 md:grid-cols-1 bg-white rounded-lg shadow-lg lg:w-1/3 p-5 m-3">
+      <form onSubmit={handleSubmit} className="grid gap-6 mb-6 md:grid-cols-1 bg-[rgb(247,244,237)]  rounded-lg shadow-lg lg:w-1/3 p-5 m-3">
 
         <div>
           <h2 className="text-2xl font-semibold text-black mb-4 text-center">Sign Up</h2>
