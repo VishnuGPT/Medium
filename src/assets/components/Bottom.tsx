@@ -8,7 +8,7 @@ const Bottom = () => {
                     <h2 className='text-sm'>Help</h2>
                     <h2 className='text-sm '>Terms</h2>
                     <h2 className='text-sm '>Privacy</h2>
-                    <div className='hidden lg:block lg:flex gap-7'>
+                    <div className='hidden lg:flex gap-7'>
                         <h2 className='text-sm '>Home</h2>
                         <h2 className='text-sm '>Careers</h2>
                         <h2 className='text-sm '>Press</h2>

@@ -9,7 +9,7 @@ const Navbar = () => {
             </div>
             <div className='flex justify-between items-center gap-7'>
                 <div>
-                    <div className='hidden lg:block lg:flex gap-7'>
+                    <div className='hidden lg:flex gap-7'>
                         <h2 className='text-sm cursor-pointer' onClick={()=>{navigate('/about')}}>Our Story</h2>
                         <h2 className='text-sm cursor-pointer' onClick={()=>{navigate('/membership')}}>Membership</h2>
                         <h2 className='text-sm cursor-pointer' onClick={()=>{navigate('/write')}}>Write</h2>
