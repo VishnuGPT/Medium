@@ -32,6 +32,9 @@ const LandingPage = () => {
         }
       } catch (error) {
         console.error('Error verifying token:', error);
+        setLoading(false);
+        navigate('/signin');
+
       } finally {
         console.log('Finished token verification');
         setLoading(false);

@@ -1,5 +1,5 @@
-import  { useEffect, useState } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PostCard from '../assets/components/PostCard'
 import axios from 'axios'
 import { motion } from 'framer-motion';
@@ -84,17 +84,33 @@ const Mainpage = () => {
         setLoading(true);
 
         const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/signin');
+            return;
+        }
+        console.log(token);
         const fetchInfo = async () => {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/verify`, { token: token });
-            if (response.data.message === 'Token is valid') {
-                setUserName(response.data.userName);
-                fetchBlogs();
-            } else {
+            try {
+                console.log("Verifying token...");
+                const response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/api/v1/verify`,
+                    { token }
+                );
+
+                if (response.data.message === 'Token is valid') {
+                    setUserName(response.data.userName);
+                    fetchBlogs();
+                } else {
+                    setLoading(false);
+                    navigate('/signin');
+                }
+            } catch (error) {
+                console.error("Token verification failed:", error);
                 setLoading(false);
                 navigate('/signin');
-
             }
-        }
+        };
+
         fetchInfo();
     }, []);
 
