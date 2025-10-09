@@ -107,7 +107,7 @@ const Mainpage = () => {
             } catch (error) {
                 console.error("Token verification failed:", error);
                 setLoading(false);
-                navigate('/signin');
+                navigate('/');
             }
         };
 
