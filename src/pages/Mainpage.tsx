@@ -85,9 +85,10 @@ const Mainpage = () => {
 
         const token = localStorage.getItem('token');
         if (!token) {
-            navigate('/signin');
+            navigate('/');
             return;
         }
+        console.log('he')
         console.log(token);
         const fetchInfo = async () => {
             try {
@@ -102,7 +103,7 @@ const Mainpage = () => {
                     fetchBlogs();
                 } else {
                     setLoading(false);
-                    navigate('/signin');
+                    navigate('/');
                 }
             } catch (error) {
                 console.error("Token verification failed:", error);
